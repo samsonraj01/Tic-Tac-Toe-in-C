@@ -1,9 +1,4 @@
-/**
- * Simple Tic-Tac-Toe (Terminal)
- * - 1D array board[9] (positions 0-8 correspond to 1-9 on screen)
- * - Two modes: Player vs Player, Player vs AI (random moves)
- * - Board displays numbers for empty cells, X or O for taken cells.
- */
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,14 +22,14 @@ int main() {
     char currentPlayer;
     int playAgain;
 
-    srand(time(NULL));   // for random AI moves
+    srand(time(NULL));  
 
     do {
-        // Initialize board with empty spaces
+        
         for (int i = 0; i < 9; i++)
             board[i] = EMPTY;
 
-        // Choose mode
+        
         printf("\n=== TIC-TAC-TOE ===\n");
         printf("1. Player vs Player\n");
         printf("2. Player vs AI\n");
@@ -43,18 +38,18 @@ int main() {
         clearInput();
 
         gameOver = 0;
-        turn = 0;   // 0 = Player 1 (X), 1 = Player 2 or AI (O)
+        turn = 0;   
 
         while (!gameOver) {
             printBoard(board);
             currentPlayer = (turn == 0) ? 'X' : 'O';
 
             if (mode == 1) {
-                // Player vs Player
+                
                 printf("Player %d's turn (%c)\n", turn + 1, currentPlayer);
                 playerMove(board, currentPlayer);
             } else {
-                // Player vs AI
+                
                 if (turn == 0) {
                     printf("Your turn (X)\n");
                     playerMove(board, 'X');
@@ -64,7 +59,7 @@ int main() {
                 }
             }
 
-            // Check for win
+            
             if (checkWin(board, currentPlayer)) {
                 printBoard(board);
                 if (mode == 1)
@@ -77,14 +72,14 @@ int main() {
                 }
                 gameOver = 1;
             }
-            // Check for draw
+            
             else if (isBoardFull(board)) {
                 printBoard(board);
                 printf("It's a draw!\n");
                 gameOver = 1;
             }
 
-            turn = !turn;   // switch player
+            turn = !turn;  
         }
 
         printf("\nPlay again? (1 = Yes, 0 = No): ");
@@ -96,17 +91,14 @@ int main() {
     return 0;
 }
 
-/**
- * Print the board.
- * For empty cells, show the position number (1-9) instead of a space.
- */
+
 void printBoard(char board[]) {
     printf("\n");
     for (int i = 0; i < 9; i++) {
         if (board[i] == EMPTY)
-            printf(" %d ", i + 1);      // show position number
+            printf(" %d ", i + 1);     
         else
-            printf(" %c ", board[i]);   // show X or O
+            printf(" %c ", board[i]);   
 
         if (i % 3 == 2) {
             printf("\n");
@@ -118,12 +110,9 @@ void printBoard(char board[]) {
     printf("\n");
 }
 
-/**
- * Check if the given player has won.
- * Returns 1 if win, 0 otherwise.
- */
+
 int checkWin(char board[], char player) {
-    // All possible winning lines (8 lines)
+    
     int lines[8][3] = {
         {0,1,2}, {3,4,5}, {6,7,8},  // rows
         {0,3,6}, {1,4,7}, {2,5,8},  // columns
@@ -139,9 +128,6 @@ int checkWin(char board[], char player) {
     return 0;
 }
 
-/**
- * Check if the board is full (no empty cells).
- */
 int isBoardFull(char board[]) {
     for (int i = 0; i < 9; i++)
         if (board[i] == EMPTY)
@@ -149,16 +135,12 @@ int isBoardFull(char board[]) {
     return 1;
 }
 
-/**
- * Check if a given position (1-9) is empty.
- */
+
 int isEmpty(char board[], int pos) {
     return (pos >= 1 && pos <= 9 && board[pos-1] == EMPTY);
 }
 
-/**
- * Ask the human player for a move and place it.
- */
+
 void playerMove(char board[], char player) {
     int pos;
     while (1) {
@@ -179,11 +161,8 @@ void playerMove(char board[], char player) {
     }
 }
 
-/**
- * AI move: pick a random empty cell.
- */
 void aiMove(char board[]) {
-    int empty[9];   // store indices of empty cells
+    int empty[9];   
     int count = 0;
 
     for (int i = 0; i < 9; i++)
@@ -196,9 +175,7 @@ void aiMove(char board[]) {
     }
 }
 
-/**
- * Clear the input buffer (after scanf).
- */
+
 void clearInput() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
